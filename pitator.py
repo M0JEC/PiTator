@@ -26,7 +26,7 @@ class ActionHandler(object):
         self.rotator.move()
 
     def handle_p_get(self):
-        return [str(az), str(ele)]
+        return [str(self.az), str(self.ele)]
 
     def close_connection(self):
         raise ConnectionFinished()
@@ -42,8 +42,6 @@ class ActionHandler(object):
 
 class Rotator(object):
     def __init__(self):
-        self.xseconds = 0  # initialise time variables
-        self.yseconds = 0
         self.ele = 0  # Elevation
         self.az = 0  # Azimuth
         self.xc = 6.666  # X axis correction factor (degrees per second)
@@ -65,7 +63,7 @@ class Rotator(object):
         # subroutine to position the X axis 90 degrees off when at near
         # vertical >85 Deg (saves time on overhead passes)
         old_xt = self.xt
-        if yt >= 85:
+        if self.yt >= 85:
             logging.debug('old x = {}'.format(self.xt))
 
             # Decides if the current position is above or below the mid
@@ -95,11 +93,11 @@ class Rotator(object):
         Move Up and/or Left
         """
         yseconds = (self.yt - self.ele) * (1 / self.yc)
-        logging.debug('Y: target {} degrees'.format(yt))
+        logging.debug('Y: target {} degrees'.format(self.yt))
         logging.debug('moving up for {} seconds'.format(yseconds))
 
         xseconds = (self.az - self.xt) * (1 / self.xc)
-        logging.debug('X: target {} degrees'.format(xt))
+        logging.debug('X: target {} degrees'.format(self.xt))
         logging.debug('moving left for {} seconds'.format(xseconds))
 
         GPIO.output(17, True)
@@ -117,22 +115,22 @@ class Rotator(object):
             time.sleep(yseconds - xseconds)
             GPIO.output(18, True)
 
-        self.ele = yt
-        logging.info('elevation is {}'.format(ele))
+        self.ele = self.yt
+        logging.info('elevation is {}'.format(self.ele))
 
-        self.az = xt
-        logging.debug('azimuth is {}'.format(az))
+        self.az = self.xt
+        logging.debug('azimuth is {}'.format(self.az))
 
     def ur(self):
         """
         Move Up and/or Right
         """
         yseconds = (self.yt - self.ele) * (1 / self.yc)
-        logging.debug('Y: target {} degrees'.format(yt))
+        logging.debug('Y: target {} degrees'.format(self.yt))
         logging.debug('moving up for {} seconds'.format(yseconds))
 
         xseconds = (self.xt - self.az) * (1 / self.xc)
-        logging.debug('X: target {} degrees'.format(xt))
+        logging.debug('X: target {} degrees'.format(self.xt))
         logging.debug('moving right for {} seconds'.format(xseconds))
 
         GPIO.output(17, True)
@@ -150,22 +148,22 @@ class Rotator(object):
             time.sleep(yseconds - xseconds)
             GPIO.output(18, True)
 
-        self.ele = yt
-        logging.info('elevation is {}'.format(ele))
+        self.ele = self.yt
+        logging.info('elevation is {}'.format(self.ele))
 
-        self.az = xt
-        logging.debug('azimuth is {}'.format(az))
+        self.az = self.xt
+        logging.debug('azimuth is {}'.format(self.az))
 
     def dl(self):
         """
         move down and/or left
         """
         yseconds = (self.ele - self.yt) * (1 / self.yc)
-        logging.debug('Y: target {} degrees'.format(yt))
+        logging.debug('Y: target {} degrees'.format(self.yt))
         logging.debug('moving down for {} seconds'.format(yseconds))
 
         xseconds = (self.az - self.xt) * (1 / self.xc)
-        logging.debug('X: target {} degrees'.format(xt))
+        logging.debug('X: target {} degrees'.format(self.xt))
         logging.debug('moving left for {} seconds'.format(xseconds))
 
         GPIO.output(18, True)
@@ -183,22 +181,22 @@ class Rotator(object):
             time.sleep(yseconds - xseconds)
             GPIO.output(17, True)
 
-        self.ele = yt
-        logging.info('elevation is {}'.format(ele))
+        self.ele = self.yt
+        logging.info('elevation is {}'.format(self.ele))
 
-        self.az = xt
-        logging.debug('azimuth is {}'.format(az))
+        self.az = self.xt
+        logging.debug('azimuth is {}'.format(self.az))
 
     def dr(self):
         """
         move down and/or right
         """
         yseconds = (self.ele - self.yt) * (1 / self.yc)
-        logging.debug('Y: target {} degrees'.format(yt))
+        logging.debug('Y: target {} degrees'.format(self.yt))
         logging.debug('moving down for {} seconds'.format(yseconds))
 
         xseconds = (self.xt - self.az) * (1 / self.xc)
-        logging.debug('X: target {} degrees'.format(xt))
+        logging.debug('X: target {} degrees'.format(self.xt))
         logging.debug('moving right for {} seconds'.format(xseconds))
 
         GPIO.output(18, True)
@@ -216,11 +214,11 @@ class Rotator(object):
             time.sleep(yseconds - xseconds)
             GPIO.output(17, True)
 
-        self.ele = yt
-        logging.info('elevation is {}'.format(ele))
+        self.ele = self.yt
+        logging.info('elevation is {}'.format(self.ele))
 
-        self.az = xt
-        logging.debug('azimuth is {}'.format(az))
+        self.az = self.xt
+        logging.debug('azimuth is {}'.format(self.az))
 
     def m():
         """
@@ -260,8 +258,8 @@ class Rotator(object):
         time.sleep(55)
         GPIO.output(17, True)
         GPIO.output(22, True)
-        az = 0
-        ele = 0
+        self.az = 0
+        self.ele = 0
         logging.info('reset to zero')
 
 
