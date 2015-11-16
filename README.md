@@ -1,7 +1,7 @@
 # PiTator
 Python based code for controlling an old CCTV Rotator with a Raspberry Pi.
 
-This project started when I managed to get hold of a cheap ex CCTV Rotator, As it had 'elevation' as well as Azumith I thought it could be converted for working Satelittes. 
+This project started when I managed to get hold of a cheap ex CCTV Rotator, as it had 'elevation' as well as Azumith I thought it could be converted for working Satelittes. 
 
 This code currently uses 'dead reckoning' to get the position of the rotator but plan is to use the PiHat (AstroPi) to feedback the heading and tilt of the rotator.
 
