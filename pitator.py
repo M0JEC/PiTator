@@ -88,7 +88,7 @@ class Rotator(object):
                 self.dl()
         self.xt = old_xt
 
-    def ul():
+    def ul(self):
         """
         Move Up and/or Left
         """
