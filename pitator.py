@@ -26,7 +26,7 @@ class ActionHandler(object):
         self.rotator.move()
 
     def handle_p_get(self):
-        return [str(self.az), str(self.ele)]
+        return [str(self.rotator.az), str(self.rotator.ele)]
 
     def close_connection(self):
         raise ConnectionFinished()
