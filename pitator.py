@@ -42,11 +42,11 @@ class ActionHandler(object):
 
 class Rotator(object):
     def __init__(self):
-        self.ele = 0  # Elevation
+        self.ele = 20  # Elevation
         self.az = 0  # Azimuth
         self.xc = 6.666  # X axis correction factor (degrees per second)
-        self.yc = 1.875  # Y axis Correction Factor (degrees per second)
-        self.yt = 0  # Y axis Target position
+        self.yc = 1.458  # Y axis Correction Factor (degrees per second)
+        self.yt = 20  # Y axis Target position
         self.xt = 0  # X axis Target position
 
         GPIO.setwarnings(False)
@@ -63,6 +63,10 @@ class Rotator(object):
         # subroutine to position the X axis 90 degrees off when at near
         # vertical >85 Deg (saves time on overhead passes)
         old_xt = self.xt
+        old_yt = self.yt
+        if self.yt <= 20:
+            self.yt = 20
+
         if self.yt >= 85:
             logging.debug('old x = {}'.format(self.xt))
 
@@ -72,9 +76,6 @@ class Rotator(object):
                 self.xt -= 90
             else:
                 self.xt += 90
-
-            logging.debug('new x = {}'.format(self.xt))
-            self.xt = nxt
 
         if self.xt >= self.az:  # RIGHT test
             if self.yt >= self.ele:  # UP Test
@@ -87,6 +88,7 @@ class Rotator(object):
             else:   # If LEFT and not UP must be DOWN and Left
                 self.dl()
         self.xt = old_xt
+        self.yt = old_yt
 
     def ul(self):
         """
@@ -259,7 +261,7 @@ class Rotator(object):
         GPIO.output(17, True)
         GPIO.output(22, True)
         self.az = 0
-        self.ele = 0
+        self.ele = 20
         logging.info('reset to zero')
 
 
